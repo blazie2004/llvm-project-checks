@@ -220,22 +220,23 @@ static Visibility getVisibilityFromAttr(const T *attr) {
 
 /// Return the explicit visibility of the given declaration.
 static std::optional<Visibility>
-getVisibilityOf(const NamedDecl *D, NamedDecl::ExplicitVisibilityKind kind) {
+getVisibilityOf  ( const NamedDecl *D,  NamedDecl::ExplicitVisibilityKind kind ) {
   // If we're ultimately computing the visibility of a type, look for
   // a 'type_visibility' attribute before looking for 'visibility'.
-  if (kind == NamedDecl::VisibilityForType) {
-    if (const auto *A = D->getAttr<TypeVisibilityAttr>()) {
-      return getVisibilityFromAttr(A);
+  if ( kind  ==  NamedDecl::VisibilityForType )  {
+    if ( const auto *A  =  D->getAttr<TypeVisibilityAttr>())  {
+      return  getVisibilityFromAttr( A );
     }
   }
 
   // If this declaration has an explicit visibility attribute, use it.
-  if (const auto *A = D->getAttr<VisibilityAttr>()) {
-    return getVisibilityFromAttr(A);
+  if ( const auto *A  =  D->getAttr<VisibilityAttr>())  {
+    return  getVisibilityFromAttr( A );
   }
 
-  return std::nullopt;
+  return  std::nullopt;
 }
+
 
 LinkageInfo LinkageComputer::getLVForType(const Type &T,
                                           LVComputationKind computation) {
