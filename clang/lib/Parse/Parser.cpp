@@ -236,11 +236,13 @@ void Parser::ConsumeExtraSemi(ExtraSemiKind Kind, DeclSpec::TST TST) {
       << FixItHint::CreateRemoval(SourceRange(StartLoc, EndLoc));
 }
 
-bool Parser::expectIdentifier() {
-  if (Tok.is(tok::identifier))
-    return false;
-  if (const auto *II = Tok.getIdentifierInfo()) {
-    if (II->isCPlusPlusKeyword(getLangOpts())) {
+bool Parser::expectIdentifier()
+{
+  if (Tok.is(tok::identifier)) return false;
+  if (const auto* II = Tok.getIdentifierInfo())
+  {
+    if (II->isCPlusPlusKeyword(getLangOpts()))
+    {
       Diag(Tok, diag::err_expected_token_instead_of_objcxx_keyword)
           << tok::identifier << Tok.getIdentifierInfo();
       // Objective-C++: Recover by treating this keyword as a valid identifier.
@@ -250,6 +252,7 @@ bool Parser::expectIdentifier() {
   Diag(Tok, diag::err_expected) << tok::identifier;
   return true;
 }
+
 
 void Parser::checkCompoundToken(SourceLocation FirstTokLoc,
                                 tok::TokenKind FirstTokKind, CompoundToken Op) {
