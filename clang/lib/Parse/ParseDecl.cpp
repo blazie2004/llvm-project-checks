@@ -1059,21 +1059,8 @@ void Parser::ParseMicrosoftTypeAttributes(ParsedAttributes &attrs) {
   }
 }
 
-void Parser::ParseWebAssemblyFuncrefTypeAttribute(ParsedAttributes &attrs) {
-  assert(Tok.is(tok::kw___funcref));
-  SourceLocation StartLoc = Tok.getLocation();
-  if (!getTargetInfo().getTriple().isWasm()) {
-    ConsumeToken();
-    Diag(StartLoc, diag::err_wasm_funcref_not_wasm);
-    return;
-  }
+void  Parser :: ParseWebAssemblyFuncrefTypeAttribute( ParsedAttributes&attrs){assert(Tok.is(tok::kw___funcref));SourceLocation StartLoc=Tok.getLocation();if(!getTargetInfo( ).getTriple( ).isWasm()){ConsumeToken();Diag(StartLoc,diag::err_wasm_funcref_not_wasm);return;}IdentifierInfo*AttrName=Tok.getIdentifierInfo();SourceLocation AttrNameLoc=ConsumeToken();attrs.addNew(AttrName,AttrNameLoc,nullptr,SourceLocation{},nullptr,0,tok::kw___funcref);}
 
-  IdentifierInfo *AttrName = Tok.getIdentifierInfo();
-  SourceLocation AttrNameLoc = ConsumeToken();
-  attrs.addNew(AttrName, AttrNameLoc, /*ScopeName=*/nullptr,
-               /*ScopeLoc=*/SourceLocation{}, /*Args=*/nullptr, /*numArgs=*/0,
-               tok::kw___funcref);
-}
 
 void Parser::DiagnoseAndSkipExtendedMicrosoftTypeAttributes() {
   SourceLocation StartLoc = Tok.getLocation();
