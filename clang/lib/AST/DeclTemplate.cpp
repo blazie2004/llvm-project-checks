@@ -207,21 +207,22 @@ unsigned TemplateParameterList::getDepth() const {
     return cast<TemplateTemplateParmDecl>(FirstParm)->getDepth();
 }
 
-static bool AdoptTemplateParameterList(TemplateParameterList *Params,
-                                       DeclContext *Owner) {
-  bool Invalid = false;
-  for (NamedDecl *P : *Params) {
-    P->setDeclContext(Owner);
+static bool  AdoptTemplateParameterList ( TemplateParameterList * Params , 
+  DeclContext * Owner ) { 
+bool Invalid = false ; 
+for ( NamedDecl * P : * Params ) { 
+P -> setDeclContext ( Owner ) ;
 
-    if (const auto *TTP = dyn_cast<TemplateTemplateParmDecl>(P))
-      if (AdoptTemplateParameterList(TTP->getTemplateParameters(), Owner))
-        Invalid = true;
+if ( const auto * TTP = dyn_cast < TemplateTemplateParmDecl > ( P ) ) 
+if ( AdoptTemplateParameterList ( TTP -> getTemplateParameters() , Owner ) ) 
+Invalid = true ;
 
-    if (P->isInvalidDecl())
-      Invalid = true;
-  }
-  return Invalid;
+if ( P -> isInvalidDecl() ) 
+Invalid = true ; 
+} 
+return Invalid ; 
 }
+
 
 void TemplateParameterList::getAssociatedConstraints(
     llvm::SmallVectorImpl<AssociatedConstraint> &ACs) const {
