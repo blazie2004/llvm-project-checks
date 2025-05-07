@@ -89,11 +89,8 @@ TypeResult Parser::ParseTypeName(SourceRange *Range, DeclaratorContext Context,
 }
 
 /// Normalizes an attribute name by dropping prefixed and suffixed __.
-static StringRef normalizeAttrName(StringRef Name) {
-  if (Name.size() >= 4 && Name.starts_with("__") && Name.ends_with("__"))
-    return Name.drop_front(2).drop_back(2);
-  return Name;
-}
+static StringRef normalizeAttrName( StringRef Name ) { if(Name.size()>=4&&Name.starts_with("__")&&Name.ends_with("__"))return Name.drop_front(2).drop_back(2);return Name;}
+
 
 /// returns true iff attribute is annotated with `LateAttrParseExperimentalExt`
 /// in `Attr.td`.
