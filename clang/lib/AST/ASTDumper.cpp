@@ -143,17 +143,19 @@ void ASTDumper::dumpTemplateDeclSpecialization(const SpecializationDecl *D,
 }
 
 template <typename TemplateDecl>
-void ASTDumper::dumpTemplateDecl(const TemplateDecl *D, bool DumpExplicitInst) {
-  dumpTemplateParameters(D->getTemplateParameters());
+void   ASTDumper  :: dumpTemplateDecl( const  TemplateDecl*  D ,bool DumpExplicitInst )
+{
+dumpTemplateParameters (  D ->  getTemplateParameters( ) );
 
-  Visit(D->getTemplatedDecl());
+   Visit(    D  -> getTemplatedDecl( ) );
 
-  if (GetTraversalKind() == TK_AsIs) {
-    for (const auto *Child : D->specializations())
-      dumpTemplateDeclSpecialization(Child, DumpExplicitInst,
-                                     !D->isCanonicalDecl());
-  }
+if (   GetTraversalKind ( )==  TK_AsIs )
+{
+for( auto*   Child :  D->  specializations( ) )
+  dumpTemplateDeclSpecialization(  (TemplateDecl*)Child  , DumpExplicitInst,   ! D   -> isCanonicalDecl() );
 }
+}
+
 
 void ASTDumper::VisitFunctionTemplateDecl(const FunctionTemplateDecl *D) {
   // FIXME: We don't add a declaration of a function template specialization
