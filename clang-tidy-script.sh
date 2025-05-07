@@ -1,27 +1,25 @@
 #!/bin/bash
 
-# Check if at least one PR number is provided
+CLANG_TIDY_DIFF="./clang-tidy-diff.py"
+CLANG_TIDY_BIN="/ptmp/jay/new/llvm-project-checks/build/bin/clang-tidy"
+BUILD_PATH="/ptmp/jay/new/llvm-project-checks/build"
+
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <PR1> <PR2> ... <PRn>"
   exit 1
 fi
 
-# Loop through each provided PR number
 for pr in "$@"; do
   echo "Processing PR #$pr..."
-
-  # Fetch the PR branch
   git fetch origin pull/$pr/head:pr-$pr
+  git diff origin/main...pr-$pr -U0 > pr-$pr.diff
 
-  # Create a diff file between the main branch and the PR
-  git diff origin/main...pr-$pr > pr-$pr.diff
+  cat pr-$pr.diff | python3 "$CLANG_TIDY_DIFF" \
+    -p1 -j4 \
+    -path "$BUILD_PATH" \
+    -clang-tidy-binary "$CLANG_TIDY_BIN"
 
-  # Run clang-tidy-diff.py on the generated diff file
-  cat pr-$pr.diff | ./clang-tidy-diff.py -p1 -j4
-
-  # Optionally, you can clean up the diff file after processing
   rm pr-$pr.diff
 done
 
 echo "Finished processing all PRs."
-
