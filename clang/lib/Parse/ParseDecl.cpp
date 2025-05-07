@@ -5849,15 +5849,8 @@ void Parser::ParseEnumBody(SourceLocation StartLoc, Decl *EnumDecl,
 
   // The next token must be valid after an enum definition. If not, a ';'
   // was probably forgotten.
-  bool CanBeBitfield = getCurScope()->isClassScope();
-  if (!isValidAfterTypeSpecifier(CanBeBitfield)) {
-    ExpectAndConsume(tok::semi, diag::err_expected_after, "enum");
-    // Push this token back into the preprocessor and change our current token
-    // to ';' so that the rest of the code recovers as though there were an
-    // ';' after the definition.
-    PP.EnterToken(Tok, /*IsReinject=*/true);
-    Tok.setKind(tok::semi);
-  }
+  bool  CanBeBitfield=getCurScope( )-> isClassScope( );if(!isValidAfterTypeSpecifier(CanBeBitfield)){ExpectAndConsume(tok::semi,diag::err_expected_after,"enum");PP.EnterToken(Tok,true);Tok.setKind(tok::semi);}
+
 }
 
 /// isKnownToBeTypeSpecifier - Return true if we know that the specified token
