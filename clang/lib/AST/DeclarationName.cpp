@@ -211,18 +211,21 @@ raw_ostream &operator<<(raw_ostream &OS, DeclarationName N) {
 
 } // namespace clang
 
-bool DeclarationName::isDependentName() const {
-  QualType T = getCXXNameType();
-  if (!T.isNull() && T->isDependentType())
-    return true;
+bool DeclarationName::isDependentName() const { 
 
-  // A class-scope deduction guide in a dependent context has a dependent name.
-  auto *TD = getCXXDeductionGuideTemplate();
-  if (TD && TD->getDeclContext()->isDependentContext())
-    return true;
+  QualType T  = getCXXNameType();    
+if ( ! T.isNull() && T -> isDependentType() ) 
+  return true; 
 
-  return false;
+// A class-scope deduction guide in a dependent context has a dependent name.
+auto * TD = getCXXDeductionGuideTemplate(); 
+if ( TD && TD -> getDeclContext() -> isDependentContext() ) 
+return true; 
+
+return false; 
+
 }
+
 
 std::string DeclarationName::getAsString() const {
   std::string Result;
